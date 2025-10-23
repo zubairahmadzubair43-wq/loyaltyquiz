@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loyalty Quiz for Wajiha 💖</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffbad2, #ff77aa);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 0.5em;
+      text-shadow: 0 0 10px #fff;
+    }
+
+    button {
+      background-color: white;
+      color: #ff4f8b;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1em;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #ff4f8b;
+      color: white;
+      transform: scale(1.05);
+    }
+
+    .question {
+      font-size: 1.4em;
+      margin: 20px 0;
+    }
+
+    .option {
+      display: block;
+      background: white;
+      color: #ff4f8b;
+      padding: 10px;
+      border-radius: 20px;
+      margin: 10px auto;
+      width: 80%;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .option:hover {
+      background: #ff4f8b;
+      color: white;
+      transform: scale(1.03);
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -50px;
+      font-size: 2em;
+      opacity: 0.7;
+      animation: floatUp 6s infinite ease-in-out;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-300px);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="quiz-container">
+    <h1>💖 Wajiha, Let's Test Your Loyalty to Bisma 💖</h1>
+    <button onclick="startQuiz()">Start Quiz</button>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "If Bisma calls you at 2 AM crying, what do you do?",
+        options: ["Mute phone and sleep 😴", "Say 'I'm here bestie' 💕", "Tell her 'Deal with it' 😎", "Throw phone under pillow 😂"],
+        answer: 1
+      },
+      {
+        question: "If someone talks bad about Bisma, you…",
+        options: ["Join them secretly 👀", "Defend her like a warrior ⚔️", "Say 'haha fr' and ignore 😂", "Change topic 😶"],
+        answer: 1
+      },
+      {
+        question: "Bisma forgot your birthday, you…",
+        options: ["End friendship 😤", "Tease her for life but forgive 😂", "Cry in corner 😭", "Act savage and say 'who are you again?' 😎"],
+        answer: 1
+      },
+      {
+        question: "If Bisma asks 'Do I look ugly today?' you…",
+        options: ["Laugh and say 'yes' 💀", "Say 'Queen always slays' 👑", "Ignore the question 😐", "Say 'ugly but cute' 😂"],
+        answer: 1
+      },
+      {
+        question: "What would you do if Bisma gets sad?",
+        options: ["Send memes till she laughs 🤣", "Ignore her mood 🙄", "Say 'mood swings lol' 😏", "Sing emotional songs with her 🎶"],
+        answer: 0
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+
+    function startQuiz() {
+      score = 0;
+      currentQuestion = 0;
+      showQuestion();
+    }
+
+    function showQuestion() {
+      const quizContainer = document.getElementById("quiz-container");
+      quizContainer.innerHTML = `
+        <h1>Question ${currentQuestion + 1}</h1>
+        <p class="question">${questions[currentQuestion].question}</p>
+        ${questions[currentQuestion].options.map((opt, index) => `
+          <div class="option" onclick="checkAnswer(${index})">${opt}</div>
+        `).join('')}
+      `;
+    }
+
+    function checkAnswer(selected) {
+      if (selected === questions[currentQuestion].answer) score++;
+      currentQuestion++;
+      if (currentQuestion < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      const quizContainer = document.getElementById("quiz-container");
+      let resultMessage = "";
+
+      if (score === questions.length) {
+        resultMessage = "💍 Wajiha is a 100% loyal bestie! Bisma is blessed! 💗";
+      } else if (score >= questions.length - 2) {
+        resultMessage = "😎 Loyal but sometimes a sleepy friend :) Still love ya!";
+      } else {
+        resultMessage = "👀 Bruhh... side character vibes 😂 Just kidding, you still matter! 💕";
+      }
+
+      quizContainer.innerHTML = `
+        <h1>Quiz Completed!</h1>
+        <p>Your Score: ${score} / ${questions.length}</p>
+        <p>${resultMessage}</p>
+        <p>No matter the score, you're stuck with me forever, Wajiha 😘 – Love, Bisma 💗</p>
+        <button onclick="startQuiz()">Replay</button>
+      `;
+    }
+
+    // Create floating hearts
+    setInterval(() => {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = '💗';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => {
+        heart.remove();
+      }, 6000);
+    }, 500);
+  </script>
+</body>
+</html>
